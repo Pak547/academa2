@@ -13,15 +13,17 @@ import { useAuth0 } from '@auth0/auth0-react';
 
 export const Content = () => {
   const { user } = useAuth0();
-  const { loading, error, data } = useQuery(GET_CARDSETS, {
-    variables: { email: user.email },
-  });
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error: {error.message}</p>;
-
-  return (
-    <>
+  if(user){
+    const { loading, error, data } = useQuery(GET_CARDSETS, {
+      variables: { email: user.email },
+    });
+    
+    if (loading) return <p>Loading...</p>;
+    if (error) return <p>Error: {error.message}</p>;
+    
+    return (
+      <>
       <Typography variant="h5" gutterBottom>
         Current Decks
       </Typography>
@@ -35,3 +37,4 @@ export const Content = () => {
     </>
   );
 };
+}

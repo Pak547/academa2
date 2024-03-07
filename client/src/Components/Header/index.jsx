@@ -11,6 +11,16 @@ const LoginButton = () => {
 
 };
 
+const LogoutButton = () => {
+  const { logout } = useAuth0();
+
+  return (
+    <button onClick={() => logout({ logoutParams: { returnTo: window.location.origin } })}>
+      Log Out
+    </button>
+  );
+};
+
 export const Header = () => {
   const [showLogin, setShowLogin] = useState(false);
 
@@ -22,8 +32,7 @@ export const Header = () => {
             Academa
           </Typography>
           <LoginButton />
-          {/* <Button color="inherit" onClick={LoginButton}>Login</Button> */}
-          <Button color="inherit">Signup</Button>
+          <LogoutButton/>
         </Toolbar>
       </AppBar>
     </>
