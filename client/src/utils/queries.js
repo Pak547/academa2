@@ -43,3 +43,9 @@ export const GET_CARD = gql`
         }
     }
 `;
+
+export const CHECK_PROFILE_EXISTS = gql`
+    query checkProfileExists($email: String!) {
+        checkProfileExists(email: $email)
+    }
+`;

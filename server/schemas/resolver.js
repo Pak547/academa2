@@ -31,10 +31,15 @@ const resolvers = {
       const params = id ? { _id: id } : {};
       return Card.findOne(params);
     },
+    checkProfileExists: async (parent, { email }) => {
+      const profile = await
+        Profile.findOne({ email });
+      return profile ? true : false;
+    },
   },
   Mutation: {
     addProfile: async (parent, { name, email }) => {
-      const profile = await Profile.create({ name, email});
+      const profile = await Profile.create({ name, email });
       // const token = signToken(profile);
       return profile;
     },
@@ -56,8 +61,8 @@ const resolvers = {
       const newCardSet = await CardSet.create({ title });
       for (let i = 0; i < cardSet.length; i++) {
         const { term, description } = cardSet[i];
-        const newCard = await Card.create({ term, description});
-        
+        const newCard = await Card.create({ term, description });
+
         await CardSet.findOneAndUpdate(
           { _id: newCardSet._id },
           { $push: { cards: newCard._id } },
@@ -66,7 +71,7 @@ const resolvers = {
       }
       const addedCardSet = await CardSet.findById({ _id: newCardSet._id });
 
-      const addToProfile = await Profile.findOneAndUpdate({user},{ $push: { cardSets: addedCardSet._id }},{new: true}).populate('cardSets');
+      const addToProfile = await Profile.findOneAndUpdate({ user }, { $push: { cardSets: addedCardSet._id } }, { new: true }).populate('cardSets');
 
       return addToProfile;
     },
@@ -74,14 +79,14 @@ const resolvers = {
       let newCards = [];
       for (let i = 0; i < cardSet.length; i++) {
         const { term, description } = cardSet[i];
-        const newCard = await Card.create({ term, description});
+        const newCard = await Card.create({ term, description });
 
         newCards.push(newCard._id);
       }
 
       const updatedCardSet = await CardSet.findOneAndUpdate(
         { _id: id },
-        { cards: newCards},
+        { cards: newCards },
         { new: true }
       ).populate('cards');
 
@@ -93,5 +98,6 @@ const resolvers = {
     },
   },
 };
+
 
 module.exports = resolvers;

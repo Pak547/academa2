@@ -29,6 +29,9 @@ root.render(
   <Auth0Provider
     domain="dev-bh6v4jvlxjk663r7.us.auth0.com"
     clientId="yiM1pcbX4WoD4iFTBSRtfOlvMdt32HeQ"
+    auth0Client="mXPQS1o5BHrUQGBoQw-qZ97TiBDDTV9W2Ze5xGgvEZCDDLauqBkQX-YusZ1dgzWh"
+    CallbackURL="http://localhost:5173"
+    audience="https://dev-bh6v4jvlxjk663r7.us.auth0.com/api/v2/"
     authorizationParams={{
       redirect_uri: window.location.origin
     }}

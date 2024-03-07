@@ -5,11 +5,19 @@ import { ADD_PROFILE } from '../../utils/mutations';
 
 const Profile = () => {
   const { user, isAuthenticated, isLoading } = useAuth0();
+  const [profile, setProfile] = React.useState(null);
 
-  if (isAuthenticated) {
-    const [addProfile, { data }] = useMutation(ADD_PROFILE);
-    addProfile({ variables: { name: user.name, email: user.email } });
-  }
+  const { data: checkData } = useQuery(CHECK_PROFILE_EXISTS, {
+    variables: { email: user?.email },
+    skip: !isAuthenticated, // Only run this query if the user is authenticated
+  });
+
+  const [addProfile] = useMutation(ADD_PROFILE, {
+    onCompleted: (data) => {
+      // Once profile is added, update state
+      setProfile(data.addProfile);
+    }
+  });
 
   if (isLoading) {
     return <div>Loading ...</div>;

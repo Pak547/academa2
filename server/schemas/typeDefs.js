@@ -5,6 +5,7 @@ type Query {
     me: Profile
     cardSets(email:String!, amount:Int): Profile
     card(id:Int!): Card
+    checkProfileExists(email:String!): Boolean
 }
 
 type Mutation {
@@ -40,6 +41,8 @@ input CardInput {
     term: String!
     description: String!
   }
+  
 `;
+
 
 module.exports = typeDefs;
